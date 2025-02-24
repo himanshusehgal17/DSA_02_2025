@@ -14,6 +14,17 @@ public abstract class BaseExecution {
         return head;
     }
 
+    public static ListNode createLinkedListInReverseOrder(int size) {
+        ListNode head = new ListNode(size), current = head;
+        for (int i = size - 1; i > 0; i--) {
+            current.next = new ListNode(i);
+            current = current.next;
+        }
+
+        return head;
+    }
+
+
 
     public static void printLinkedList(ListNode head) {
 

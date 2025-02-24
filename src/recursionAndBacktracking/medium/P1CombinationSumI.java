@@ -29,18 +29,45 @@ import java.util.concurrent.ArrayBlockingQueue;
  * Example 3:
  * Input: candidates = [2], target = 1
  * Output: []
- *
+ * <p>
  * Link: https://leetcode.com/problems/combination-sum/submissions/1550422876/
  */
 public class P1CombinationSumI {
     public static void main(String[] args) {
         int[] arr = {2, 3, 6, 7};
-        List<Set<Integer>> ans = new ArrayList<>();
-//        findAllPossibleArray(arr, 0, new LinkedHashSet<>(), 8, ans);
         List<List<Integer>> ans1 = new ArrayList<>();
-        findAllPossibleArray(arr,0,new ArrayList<>(),8,ans1);
-
+        findAllPossibleArray(arr, 0, new ArrayList<>(), 8, ans1);
         ans1.forEach(System.out::println);
+        Set<List<Integer>> ans = new HashSet<>();
+        ans.stream().toList();
+        List<Integer> comb = new ArrayList<>();
+        combinationSum(arr, 8, 0, comb, ans);
+        ans.forEach(System.out::println);
+    }
+
+
+    public static void combinationSum(int[] arr, int target, int index, List<Integer> comb, Set<List<Integer>> ans) {
+
+        if(arr.length == index || target < 0) {
+            return;
+        }
+
+        if(target == 0) {
+            ans.add(new ArrayList<>(comb));
+            return;
+        }
+
+
+        comb.addLast(arr[index]);
+        // Single Inclusion
+        combinationSum(arr, target - arr[index], index + 1, comb, ans);
+
+        // Multiple Inclusion
+        combinationSum(arr, target - arr[index], index, comb, ans);
+        // Exclude
+        comb.removeLast();
+        combinationSum(arr, target, index + 1, comb, ans);
+
     }
 
 
